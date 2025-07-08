@@ -25,7 +25,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\dan4i\\RiderProjects\\Hackaton\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\dan4i\\RiderProjects\\Hackaton\\Infrastructure\\Infrastructure.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Headers;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 using Application.Services.Abstractions;
 
@@ -7,9 +6,12 @@ namespace Application.Services.Implementations;
 
 public class ApiService : IApiService
 {
-    private readonly HttpClient httpClient;
     private readonly string apiKey = "AIzaSyAn7Rn4z2fk0kGhs_AlurMmXKeF_3S2YhM";
-    private readonly string geminiUrl = "https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=";
+
+    private readonly string geminiUrl =
+        "https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=";
+
+    private readonly HttpClient httpClient;
 
     public ApiService(HttpClient httpClient)
     {
@@ -24,10 +26,13 @@ public class ApiService : IApiService
             {
                 new
                 {
-                    role = "user", // 👈 ОБЯЗАТЕЛЬНО
+                    role = "user",
                     parts = new[]
                     {
-                        new { text = "Ты помогаешь студенту понять учебный материал. Выдели ключевые идеи кратко и ясно." },
+                        new
+                        {
+                            text = "Ты помогаешь студенту понять учебный материал. Выдели ключевые идеи кратко и ясно."
+                        },
                         new { text = $"Вот учебный материал:\n{content}\n\nСделай краткое резюме." }
                     }
                 }
@@ -45,7 +50,7 @@ public class ApiService : IApiService
             {
                 new
                 {
-                    role = "user", // 👈 ОБЯЗАТЕЛЬНО
+                    role = "user",
                     parts = new[]
                     {
                         new { text = "Ты помощник, отвечай кратко и понятно по теме материала." },
@@ -75,10 +80,7 @@ public class ApiService : IApiService
         using var doc = JsonDocument.Parse(responseJson);
 
         var candidates = doc.RootElement.GetProperty("candidates");
-        if (candidates.GetArrayLength() == 0)
-        {
-            throw new Exception("Gemini API Error: Empty candidates in response.");
-        }
+        if (candidates.GetArrayLength() == 0) throw new Exception("Gemini API Error: Empty candidates in response.");
 
         return candidates[0]
             .GetProperty("content")
