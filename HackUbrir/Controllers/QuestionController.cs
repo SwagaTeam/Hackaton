@@ -8,7 +8,7 @@ namespace HackUbrir.Controllers;
 public class QuestionController(IQuestionService service) : ControllerBase
 {
     [HttpPost("create")]
-    public async Task<IActionResult> Create(QuestionRequest request)
+    public async Task<IActionResult> Create([FromBody] QuestionRequest request)
     {
         try
         {

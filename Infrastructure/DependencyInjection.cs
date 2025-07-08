@@ -1,4 +1,6 @@
 ﻿using Domain;
+using Infrastructure.Repository.Abstractions;
+using Infrastructure.Repository.Implementations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,8 +12,10 @@ public static class DependencyInjection
     {
         services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connString));
 
-        //services.AddScoped<ITraineeRepository, TraineeRepository>();
-
+        services.AddScoped<IAnswerRepository, AnswerRepository>();
+        services.AddScoped<IQuestionRepository, QuestionRepository>();
+        services.AddScoped<ITestRepository, TestRepository>();
+        
         return services;
     }
 }
