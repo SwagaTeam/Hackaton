@@ -1,4 +1,5 @@
-﻿using Application.Middleware;
+﻿using Application.Dto;
+using Application.Middleware;
 using Application.Models.Roles;
 using Application.Services.Abstractions;
 using Domain.Entities;
@@ -42,7 +43,7 @@ namespace Application.Services.Implementations
             return claimsIdentity?.FindAll(ClaimTypes.Role).Select(claim => claim.Value).ToList() ?? new List<string>();
         }
 
-        public string GenerateJwtToken(UserEntity user)
+        public string GenerateJwtToken(UserModel user)
         {
             Console.WriteLine($"Generating token for user: {user.Id}");
             var userRoles = new List<string>();
