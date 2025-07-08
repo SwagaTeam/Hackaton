@@ -1,21 +1,41 @@
 using Application.Services.Abstractions;
 using Application.Services.Implementations;
+using Domain;
+using Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
-var builder = WebApplication.CreateBuilder(args);
+internal class Program
+{
+    private static async Task Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+        builder.Services.AddControllers();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+        builder.Services.AddScoped<IApiService, ApiService>();
+        builder.Services.AddSingleton<HttpClient>();
+        builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("DefaultConnection"));
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IApiService, ApiService>();
-builder.Services.AddSingleton<HttpClient>();
-var app = builder.Build();
+        var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-app.UseSwagger();
-app.UseSwaggerUI();
+        using var scope = app.Services.CreateScope();
+        using var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        await Migrate(appDbContext);
 
-app.UseHttpsRedirection();
+        // Configure the HTTP request pipeline.
+        app.UseSwagger();
+        app.UseSwaggerUI();
 
-app.MapControllers();
+        app.UseHttpsRedirection();
 
-app.Run();
+        app.MapControllers();
+
+        await app.RunAsync();
+    }
+
+    public static async Task Migrate(AppDbContext context)
+    {
+        await context.Database.MigrateAsync();
+        await context.SaveChangesAsync();
+    }
+}
