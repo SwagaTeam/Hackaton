@@ -19,6 +19,7 @@ internal class Program
         builder.Services.AddScoped<IAnswerService, AnswerService>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IAuth, Auth>();
+        builder.Services.AddScoped<IUserAnswerService, UserAnswerService>();
         builder.Services.AddScoped<IEncrypt, Encrypt>();
         builder.Services.AddScoped<ILevelService, LevelService>();
         builder.Services.AddScoped<IModuleService, ModuleService>();
