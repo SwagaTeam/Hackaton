@@ -34,10 +34,16 @@ public class AppDbContext : DbContext
 
 
         // Связь теста с вопросами
-        modelBuilder.Entity<TestEntity>()
+        modelBuilder.Entity<LevelEntity>()
             .HasMany(t => t.Questions)
-            .WithOne(q => q.Test)
-            .HasForeignKey(q => q.TestId)
+            .WithOne(q => q.Level)
+            .HasForeignKey(q => q.LevelId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<ModuleEntity>()
+            .HasMany(t => t.Levels)
+            .WithOne(l => l.Module)
+            .HasForeignKey(l => l.ModuleId)
             .OnDelete(DeleteBehavior.Cascade);
 
         // Связь уровня с теорией и тестом
@@ -45,12 +51,6 @@ public class AppDbContext : DbContext
             .HasOne(l => l.Theory)
             .WithOne()
             .HasForeignKey<LevelEntity>(l => l.TheoryId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        modelBuilder.Entity<LevelEntity>()
-            .HasOne(l => l.Test)
-            .WithOne()
-            .HasForeignKey<LevelEntity>(l => l.TestId)
             .OnDelete(DeleteBehavior.Cascade);
 
 

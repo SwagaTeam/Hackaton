@@ -6,11 +6,11 @@ namespace Infrastructure.Repository.Implementations;
 
 public class QuestionRepository(AppDbContext context) : IQuestionRepository
 {
-    public async Task<int> CreateAsync(string title, int testId)
+    public async Task<int> CreateAsync(string title, int levelId)
     {
         var entity = new QuestionEntity();
         entity.Title = title;
-        entity.TestId = testId;
+        entity.LevelId = levelId;
         context.Questions.Add(entity);
         await context.SaveChangesAsync();
         return entity.Id;

@@ -60,6 +60,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("LevelNumber")
                         .HasColumnType("integer");
 
+                    b.Property<int>("ModuleId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -67,24 +70,37 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("NextLevelId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("TestId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("TheoryId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NextLevelId")
-                        .IsUnique();
+                    b.HasIndex("ModuleId");
 
-                    b.HasIndex("TestId")
+                    b.HasIndex("NextLevelId")
                         .IsUnique();
 
                     b.HasIndex("TheoryId")
                         .IsUnique();
 
                     b.ToTable("Levels");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ModuleEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ModuleEntity");
                 });
 
             modelBuilder.Entity("Domain.Entities.QuestionEntity", b =>
@@ -95,10 +111,7 @@ namespace Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CorrectAnswerId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TestId")
+                    b.Property<int>("LevelId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Title")
@@ -107,10 +120,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CorrectAnswerId")
-                        .IsUnique();
-
-                    b.HasIndex("TestId");
+                    b.HasIndex("LevelId");
 
                     b.ToTable("Questions");
                 });
@@ -164,6 +174,9 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Login")
                         .IsRequired()
                         .HasColumnType("text");
@@ -195,16 +208,16 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.LevelEntity", b =>
                 {
+                    b.HasOne("Domain.Entities.ModuleEntity", "Module")
+                        .WithMany("Levels")
+                        .HasForeignKey("ModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entities.LevelEntity", "NextLevel")
                         .WithOne()
                         .HasForeignKey("Domain.Entities.LevelEntity", "NextLevelId")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Domain.Entities.TestEntity", "Test")
-                        .WithOne()
-                        .HasForeignKey("Domain.Entities.LevelEntity", "TestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.HasOne("Domain.Entities.TheoryEntity", "Theory")
                         .WithOne()
@@ -212,39 +225,37 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("NextLevel");
+                    b.Navigation("Module");
 
-                    b.Navigation("Test");
+                    b.Navigation("NextLevel");
 
                     b.Navigation("Theory");
                 });
 
             modelBuilder.Entity("Domain.Entities.QuestionEntity", b =>
                 {
-                    b.HasOne("Domain.Entities.AnswerEntity", "CorrectAnswer")
-                        .WithOne()
-                        .HasForeignKey("Domain.Entities.QuestionEntity", "CorrectAnswerId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("Domain.Entities.TestEntity", "Test")
+                    b.HasOne("Domain.Entities.LevelEntity", "Level")
                         .WithMany("Questions")
-                        .HasForeignKey("TestId")
+                        .HasForeignKey("LevelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CorrectAnswer");
+                    b.Navigation("Level");
+                });
 
-                    b.Navigation("Test");
+            modelBuilder.Entity("Domain.Entities.LevelEntity", b =>
+                {
+                    b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ModuleEntity", b =>
+                {
+                    b.Navigation("Levels");
                 });
 
             modelBuilder.Entity("Domain.Entities.QuestionEntity", b =>
                 {
                     b.Navigation("Answers");
-                });
-
-            modelBuilder.Entity("Domain.Entities.TestEntity", b =>
-                {
-                    b.Navigation("Questions");
                 });
 #pragma warning restore 612, 618
         }

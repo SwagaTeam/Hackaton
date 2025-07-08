@@ -7,10 +7,10 @@ public class LevelEntity
     public string Name { get; set; }
     public int Difficulty { get; set; }
     public int? NextLevelId { get; set; }
-    public int TestId { get; set; }
     public int TheoryId { get; set; }
+    public int ModuleId { get; set; }
+    public virtual ModuleEntity Module { get; set; }
     public virtual TheoryEntity Theory { get; set; }
-    public virtual TestEntity Test { get; set; }
-
+    public virtual ICollection<QuestionEntity> Questions { get; set; }
     public virtual LevelEntity? NextLevel { get; set; }
 }
