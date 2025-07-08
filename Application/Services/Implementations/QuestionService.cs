@@ -18,4 +18,10 @@ public class QuestionService(IQuestionRepository repository) : IQuestionService
         var dto = new QuestionResponse(entity);
         return dto;
     }
+
+    public async Task<IEnumerable<QuestionResponse>> GetRandomQuestionsBelowLevel(int levelId)
+    {
+        var entities = await repository.GetRandomQuestionsBelowLevel(levelId);
+        return entities is null ? null : entities.Select(x=> new QuestionResponse(x));
+    }
 }

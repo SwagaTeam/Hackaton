@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HackUbrir")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+907f5b2419a9984ea811732ed1bb5f5eb1c04265")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6c5a226467b616cd4621ac14404f3190d4ae2b57")]
 [assembly: System.Reflection.AssemblyProductAttribute("HackUbrir")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HackUbrir")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -25,4 +25,15 @@ public class QuestionRepository(AppDbContext context) : IQuestionRepository
             .FirstOrDefaultAsync(q => q.Id == id);
         return entity;
     }
+
+    public async Task<IEnumerable<QuestionEntity>> GetRandomQuestionsBelowLevel(int levelId)
+    {
+        return await context.Questions
+            .Include(q => q.Level)
+            .Include(q => q.Answers)
+            .Where(q=>q.Level.LevelNumber <= levelId)
+            .OrderBy(q=>Guid.NewGuid())
+            .Take(10)
+            .ToListAsync();
+    }
 }

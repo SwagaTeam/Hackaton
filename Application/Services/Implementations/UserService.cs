@@ -11,15 +11,9 @@ using System.Threading.Tasks;
 
 namespace Application.Services.Implementations
 {
-    public class UserService : IUserService
+    public class UserService(IUserRepository userRepository, IAuth auth, IEncrypt encrypt) : IUserService
     {
-        private readonly IUserRepository userRepository;
-        private readonly IAuth auth;
-        private readonly IEncrypt encrypt;
-        public UserService(IUserRepository userRepository)
-        {
-            this.userRepository = userRepository;
-        }
+
         public async Task<int> Create(RegisterModel model)
         {
             if (model.Password != model.RepeatPassword)
