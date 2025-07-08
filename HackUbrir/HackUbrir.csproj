@@ -13,9 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Domain\" />
-      <Folder Include="Infrastructure\Abstractions\" />
-      <Folder Include="Infrastructure\Implementations\" />
+      <ProjectReference Include="..\Application\Application.csproj" />
     </ItemGroup>
 
 </Project>

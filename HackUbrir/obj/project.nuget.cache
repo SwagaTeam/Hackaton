@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "i9B9jP7mflM=",
+  "dgSpecHash": "8GnmPZBZDRo=",
   "success": true,
-  "projectFilePath": "C:\\Users\\dan4i\\RiderProjects\\HackUbrir\\HackUbrir\\HackUbrir.csproj",
+  "projectFilePath": "C:\\Users\\dan4i\\RiderProjects\\Hackaton\\HackUbrir\\HackUbrir.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dan4i\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.8\\microsoft.aspnetcore.openapi.8.0.8.nupkg.sha512",
     "C:\\Users\\dan4i\\.nuget\\packages\\microsoft.entityframeworkcore\\9.0.6\\microsoft.entityframeworkcore.9.0.6.nupkg.sha512",
