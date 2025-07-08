@@ -1,3 +1,5 @@
+using Application.Services.Abstractions;
+using Application.Services.Implementations;
 using Domain;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +12,7 @@ internal class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        //builder.Services.AddScoped<IApiService, ApiService>();
+        builder.Services.AddScoped<IApiService, ApiService>();
         builder.Services.AddSingleton<HttpClient>();
         builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("DefaultConnection"));
 
