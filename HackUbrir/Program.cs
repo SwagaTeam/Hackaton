@@ -1,20 +1,32 @@
 using Application.Middleware;
+using Application.Quartz;
+using Application.Quartz.Workers;
 using Application.Services.Abstractions;
 using Application.Services.Implementations;
+using Application.Services.MailService;
 using Domain;
 using Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Security.Claims;
+using System.Text;
 
 internal class Program
 {
     private static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        AddAuthentication(builder.Services, builder.Configuration);
+        AddSwagger(builder.Services);
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-        builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("DefaultConnection"));
+        string connString = builder.Configuration.GetConnectionString("DefaultConnection");
+        builder.Services.AddInfrastructure(connString);
         builder.Services.AddHttpContextAccessor();
+
         builder.Services.AddScoped<IApiService, ApiService>();
         builder.Services.AddScoped<IQuestionService, QuestionService>();
         builder.Services.AddScoped<IAnswerService, AnswerService>();
@@ -25,11 +37,24 @@ internal class Program
         builder.Services.AddScoped<ILevelService, LevelService>();
         builder.Services.AddScoped<IModuleService, ModuleService>();
         builder.Services.AddScoped<ITheoryService, TheoryService>();
-        builder.Services.AddScoped<IBlacklistService, BlacklistService>();
+
+        builder.Services.AddSingleton<IBlacklistService, BlacklistService>();
         builder.Services.AddSingleton<HttpClient>();
 
+        builder.Services.Configure<MailSettings>(
+            builder.Configuration.GetSection(nameof(MailSettings))
+        );
+
+        builder.Services.AddScoped<NotificationJob>();
+
+        builder.Services.AddTransient<JobFactory>();
+        builder.Services.AddTransient<IMailService, MailService>();
+        builder.Services.AddScoped<IEmailSender, EmailSender>();
+
+        builder.Services.AddHostedService<DataSchedulerService>();
 
         var app = builder.Build();
+        app.UseMiddleware<JwtBlacklistMiddleware>();
 
         using var scope = app.Services.CreateScope();
         using var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -38,12 +63,67 @@ internal class Program
         // Configure the HTTP request pipeline.
         app.UseSwagger();
         app.UseSwaggerUI();
-
+        app.UseAuthentication();
+        app.UseAuthorization();
         app.UseHttpsRedirection();
-        app.UseMiddleware<JwtBlacklistMiddleware>();
         app.MapControllers();
 
         await app.RunAsync();
+    }
+
+    private static void AddAuthentication(IServiceCollection services, ConfigurationManager configuration)
+    {
+        services
+            .AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = configuration["Jwt:Issuer"],
+                    ValidAudience = configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!)),
+                    RoleClaimType = ClaimTypes.Role
+                };
+            });
+    }
+
+    private static void AddSwagger(IServiceCollection services)
+    {
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "BillingApplication API", Version = "v1" });
+
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                Description = "Введите 'Bearer' [пробел] для авторизации",
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.ApiKey
+            });
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] {}
+                }
+            });
+        });
     }
 
     public static async Task Migrate(AppDbContext context)

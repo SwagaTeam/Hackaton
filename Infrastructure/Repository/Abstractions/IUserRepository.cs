@@ -11,6 +11,7 @@ namespace Infrastructure.Repository.Abstractions
     {
         public Task<int> Create(UserEntity user);
         public Task<UserEntity> GetUser(int userId);
+        public Task<List<UserEntity>> GetUsers();
         public Task<UserEntity?> GetUserByLogin(string login);
     }
 }

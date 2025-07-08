@@ -48,6 +48,11 @@ namespace Application.Services.Implementations
             return userModel;
         }
 
+        public async Task<List<UserEntity>> GetUsers()
+        {
+            return await userRepository.GetUsers();
+        }
+
         public async Task<UserModel?> ValidateCredentials(string login, string password)
         {
             var userEntity = await userRepository.GetUserByLogin(login);

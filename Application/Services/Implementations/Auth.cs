@@ -61,7 +61,7 @@ namespace Application.Services.Implementations
 
             claims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["secret"]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(

@@ -1,6 +1,7 @@
 ﻿using Domain;
 using Domain.Entities;
 using Infrastructure.Repository.Abstractions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,11 @@ namespace Infrastructure.Repository.Implementations
         public async Task<UserEntity?> GetUserByLogin(string login)
         {
             return context.Users.FirstOrDefault(x => x.Login == login);
+        }
+
+        public async Task<List<UserEntity>> GetUsers()
+        {
+            return await context.Users.ToListAsync();
         }
     }
 }
