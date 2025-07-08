@@ -1,9 +1,10 @@
 ﻿using Domain;
 using Domain.Entities;
+using Infrastructure.Repository.Abstractions;
 
 namespace Infrastructure.Repository.Implementations;
 
-public class QuestionRepository(AppDbContext context)
+public class QuestionRepository(AppDbContext context) : IQuestionRepository
 {
     public async Task<int> CreateAsync(string title, int testId)
     {

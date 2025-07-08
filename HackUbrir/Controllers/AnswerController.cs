@@ -1,13 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Dto;
+using Application.Services.Abstractions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HackUbrir.Controllers;
 
 [ApiController]
-public class AnswerController : ControllerBase
+public class AnswerController(IAnswerService service) : ControllerBase
 {
     [HttpPost("create")]
-    public async Task<IActionResult> Create()
+    public async Task<IActionResult> Create([FromBody] AnswerRequest request)
     {
-        return Ok();
+        try
+        {
+            var id = await service.Create(request);
+            return Ok(id);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 }
