@@ -16,4 +16,10 @@ public class AnswerRepository(AppDbContext context) : IAnswerRepository
         await context.SaveChangesAsync();
         return entity.Id;
     }
+
+    public async Task<AnswerEntity> GetById(int id)
+    {
+        var entity = await context.Answers.FindAsync(id);
+        return entity;
+    }
 }

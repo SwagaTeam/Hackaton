@@ -4,5 +4,5 @@ namespace Application.Services.Abstractions;
 
 public interface IQuestionService
 {
-    public Task<int> Create(QuestionRequest request);
+    public Task<int> Create(QuestionDto dto);
 }

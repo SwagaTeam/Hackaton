@@ -13,7 +13,6 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddScoped<IApiService, ApiService>();
-        builder.Services.AddScoped<ITestService, TestService>();
         builder.Services.AddScoped<IQuestionService, QuestionService>();
         builder.Services.AddScoped<IAnswerService, AnswerService>();
         builder.Services.AddSingleton<HttpClient>();

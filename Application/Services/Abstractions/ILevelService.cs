@@ -1,6 +1,10 @@
-﻿namespace Application.Services.Abstractions;
+﻿using Application.Dto;
 
-public class ILevelService
+namespace Application.Services.Abstractions;
+
+public interface ILevelService
 {
-    
+    public Task<LevelDto> GetById(int id);
+    public Task<int> Create(LevelDto dto);
+    public Task<LevelDto> GetByNumber(int number);
 }
