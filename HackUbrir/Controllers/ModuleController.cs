@@ -6,10 +6,10 @@ namespace HackUbrir.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class LevelController(ILevelService service) : ControllerBase
+public class ModuleController(IModuleService service) : ControllerBase
 {
     [HttpPost("create")]
-    public async Task<IActionResult> Create([FromBody] LevelDto dto)
+    public async Task<IActionResult> Create([FromBody] ModuleDto dto)
     {
         try
         {

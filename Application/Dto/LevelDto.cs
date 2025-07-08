@@ -10,10 +10,10 @@ public class LevelDto
     public int? NextLevelId { get; set; }
     public int TheoryId { get; set; }
     public int ModuleId { get; set; }
-    public TheoryDto Theory { get; set; }
-    public LevelDto NextLevel { get; set; }
-    public List<QuestionDto> Questions { get; set; }
-    public ModuleDto Module { get; set; }
+    public TheoryDto? Theory { get; set; }
+    public LevelDto? NextLevel { get; set; }
+    public List<QuestionDto>? Questions { get; set; }
+    public ModuleDto? Module { get; set; }
 
     public LevelDto(LevelEntity entity)
     {

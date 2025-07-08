@@ -13,6 +13,7 @@ internal class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("DefaultConnection"));
         builder.Services.AddScoped<IApiService, ApiService>();
         builder.Services.AddScoped<IQuestionService, QuestionService>();
         builder.Services.AddScoped<IAnswerService, AnswerService>();
@@ -24,7 +25,6 @@ internal class Program
         builder.Services.AddScoped<ITheoryService, TheoryService>();
         builder.Services.AddScoped<IBlacklistService, BlacklistService>();
         builder.Services.AddSingleton<HttpClient>();
-        builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 
         var app = builder.Build();

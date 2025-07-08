@@ -23,7 +23,7 @@ public class TheoryController(ITheoryService service) : ControllerBase
     }
 
     [HttpGet("[action]/{id}")]
-    public async Task<IActionResult> GetById([FromQuery] int id)
+    public async Task<IActionResult> GetById([FromRoute] int id)
     {
         try
         {
