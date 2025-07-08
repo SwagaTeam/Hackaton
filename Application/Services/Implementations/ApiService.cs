@@ -8,8 +8,9 @@ namespace Application.Services.Implementations;
 public class ApiService : IApiService
 {
     private readonly HttpClient httpClient;
-    private readonly string apiKey =
-        "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";
+    private readonly string apiKey = "AIzaSyAn7Rn4z2fk0kGhs_AlurMmXKeF_3S2YhM";
+    private readonly string geminiUrl = "https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=";
+
     public ApiService(HttpClient httpClient)
     {
         this.httpClient = httpClient;
@@ -19,53 +20,70 @@ public class ApiService : IApiService
     {
         var requestBody = new
         {
-            model = "gpt-3.5-turbo",
-            messages = new[]
+            contents = new[]
             {
-                new { role = "system", content = "Ты помогаешь студенту понять учебный материал. Выдели ключевые идеи кратко и ясно." },
-                new { role = "user", content = $"Вот учебный материал:\n{content}\n\nСделай краткое резюме." }
+                new
+                {
+                    role = "user", // 👈 ОБЯЗАТЕЛЬНО
+                    parts = new[]
+                    {
+                        new { text = "Ты помогаешь студенту понять учебный материал. Выдели ключевые идеи кратко и ясно." },
+                        new { text = $"Вот учебный материал:\n{content}\n\nСделай краткое резюме." }
+                    }
+                }
             }
         };
 
-        return await SendRequestAsync(requestBody);
+        return await SendGeminiRequestAsync(requestBody);
     }
 
     public async Task<string> AskQuestionAsync(string question, string block)
     {
         var requestBody = new
         {
-            model = "gpt-3.5-turbo",
-            messages = new[]
+            contents = new[]
             {
-                new { role = "system", content = "Ты помощник, отвечай кратко и понятно по теме материала." },
-                new { role = "user", content = $"Материал:\n{block}\n\nВопрос: {question}" }
+                new
+                {
+                    role = "user", // 👈 ОБЯЗАТЕЛЬНО
+                    parts = new[]
+                    {
+                        new { text = "Ты помощник, отвечай кратко и понятно по теме материала." },
+                        new { text = $"Материал:\n{block}\n\nВопрос: {question}" }
+                    }
+                }
             }
         };
 
-        return await SendRequestAsync(requestBody);
+        return await SendGeminiRequestAsync(requestBody);
     }
 
-    private async Task<string> SendRequestAsync(object requestBody)
+    private async Task<string> SendGeminiRequestAsync(object requestBody)
     {
         var json = JsonSerializer.Serialize(requestBody);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
-
-        var response = await httpClient.PostAsync("https://api.openai.com/v1/chat/completions", content);
+        var response = await httpClient.PostAsync($"{geminiUrl}{apiKey}", content);
 
         if (!response.IsSuccessStatusCode)
         {
             var errorText = await response.Content.ReadAsStringAsync();
-            throw new Exception($"OpenAI API Error: {response.StatusCode}, {errorText}");
+            throw new Exception($"Gemini API Error: {response.StatusCode}, {errorText}");
         }
 
         var responseJson = await response.Content.ReadAsStringAsync();
         using var doc = JsonDocument.Parse(responseJson);
-        return doc.RootElement
-            .GetProperty("choices")[0]
-            .GetProperty("message")
+
+        var candidates = doc.RootElement.GetProperty("candidates");
+        if (candidates.GetArrayLength() == 0)
+        {
+            throw new Exception("Gemini API Error: Empty candidates in response.");
+        }
+
+        return candidates[0]
             .GetProperty("content")
+            .GetProperty("parts")[0]
+            .GetProperty("text")
             .GetString();
     }
 }

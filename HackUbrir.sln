@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackUbrir", "HackUbrir\Hack
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{8EDA7D99-F408-474C-9C45-9FB8BD4DA75D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{2E7DD0C9-E0C8-453D-8CE5-D60BAC2964A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{7130B28A-B985-4D88-88AD-F827A786D4C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{8EDA7D99-F408-474C-9C45-9FB8BD4DA75D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EDA7D99-F408-474C-9C45-9FB8BD4DA75D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EDA7D99-F408-474C-9C45-9FB8BD4DA75D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E7DD0C9-E0C8-453D-8CE5-D60BAC2964A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E7DD0C9-E0C8-453D-8CE5-D60BAC2964A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E7DD0C9-E0C8-453D-8CE5-D60BAC2964A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E7DD0C9-E0C8-453D-8CE5-D60BAC2964A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7130B28A-B985-4D88-88AD-F827A786D4C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7130B28A-B985-4D88-88AD-F827A786D4C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7130B28A-B985-4D88-88AD-F827A786D4C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7130B28A-B985-4D88-88AD-F827A786D4C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
