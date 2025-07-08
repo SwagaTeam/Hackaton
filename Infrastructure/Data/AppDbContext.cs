@@ -12,7 +12,6 @@ public class AppDbContext : DbContext
     public DbSet<UserEntity> Users { get; set; }
     public DbSet<LevelEntity> Levels { get; set; }
     public DbSet<TheoryEntity> Theories { get; set; }
-    public DbSet<TestEntity> Tests { get; set; }
     public DbSet<QuestionEntity> Questions { get; set; }
     public DbSet<AnswerEntity> Answers { get; set; }
 

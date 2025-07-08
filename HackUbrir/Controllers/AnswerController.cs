@@ -9,11 +9,11 @@ namespace HackUbrir.Controllers;
 public class AnswerController(IAnswerService service) : ControllerBase
 {
     [HttpPost("create")]
-    public async Task<IActionResult> Create([FromBody] AnswerRequest request)
+    public async Task<IActionResult> Create([FromBody] AnswerDto dto)
     {
         try
         {
-            var id = await service.Create(request);
+            var id = await service.Create(dto);
             return Ok(id);
         }
         catch (Exception e)
