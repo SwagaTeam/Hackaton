@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HackUbrir.Controllers;
 
 [ApiController]
+[Route("[controller]")]
 public class TestController(ITestService service) : ControllerBase
 {
     [HttpPost("create")]

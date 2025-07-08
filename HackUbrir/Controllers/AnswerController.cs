@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HackUbrir.Controllers;
 
 [ApiController]
+[Route("[controller]")]
 public class AnswerController(IAnswerService service) : ControllerBase
 {
     [HttpPost("create")]
