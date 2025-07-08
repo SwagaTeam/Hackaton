@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackUbrir", "HackUbrir\HackUbrir.csproj", "{5A51C4FD-C2C3-4662-A7EE-950D572B039E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{8EDA7D99-F408-474C-9C45-9FB8BD4DA75D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{5A51C4FD-C2C3-4662-A7EE-950D572B039E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A51C4FD-C2C3-4662-A7EE-950D572B039E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A51C4FD-C2C3-4662-A7EE-950D572B039E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EDA7D99-F408-474C-9C45-9FB8BD4DA75D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EDA7D99-F408-474C-9C45-9FB8BD4DA75D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EDA7D99-F408-474C-9C45-9FB8BD4DA75D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EDA7D99-F408-474C-9C45-9FB8BD4DA75D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

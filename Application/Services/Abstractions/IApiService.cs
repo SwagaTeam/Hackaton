@@ -1,6 +1,7 @@
 ﻿namespace Application.Services.Abstractions;
 
-public class IApiService
+public interface IApiService
 {
-    
+    public Task<string> GetSummaryAsync(string content);
+    public Task<string> AskQuestionAsync(string question, string block);
 }
