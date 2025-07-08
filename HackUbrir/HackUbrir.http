@@ -1,0 +1,6 @@
+@HackUbrir_HostAddress = http://localhost:5246
+
+GET {{HackUbrir_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
