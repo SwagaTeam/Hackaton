@@ -5,5 +5,6 @@ namespace Application.Services.Abstractions;
 
 public interface IModuleService
 {
-    public Task<int> Create(ModuleDto dto);
+    public Task<int> Create(ModuleDtoRequest dtoResponse);
+    public Task<ModuleDtoResponse> GetById(int id);
 }

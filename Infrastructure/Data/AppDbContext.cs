@@ -31,7 +31,13 @@ public class AppDbContext : DbContext
             .WithOne()
             .HasForeignKey(a => a.QuestionId)
             .OnDelete(DeleteBehavior.Cascade);
-
+        
+        //связь левела и модуля
+        modelBuilder.Entity<LevelEntity>()
+            .HasOne(l=>l.Module)
+            .WithMany(m => m.Levels)
+            .HasForeignKey(l => l.ModuleId) 
+            .OnDelete(DeleteBehavior.Cascade);
 
         // Связь теста с вопросами
         modelBuilder.Entity<LevelEntity>()

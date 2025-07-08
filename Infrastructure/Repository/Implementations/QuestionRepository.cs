@@ -1,6 +1,7 @@
 ﻿using Domain;
 using Domain.Entities;
 using Infrastructure.Repository.Abstractions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.Implementations;
 
@@ -14,5 +15,14 @@ public class QuestionRepository(AppDbContext context) : IQuestionRepository
         context.Questions.Add(entity);
         await context.SaveChangesAsync();
         return entity.Id;
+    }
+
+    public async Task<QuestionEntity> GetById(int id)
+    {
+        var entity = await context.Questions
+            .Include(q => q.Level)
+            .Include(q => q.Answers)
+            .FirstOrDefaultAsync(q => q.Id == id);
+        return entity;
     }
 }

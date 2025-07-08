@@ -21,4 +21,18 @@ public class AnswerController(IAnswerService service) : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+    [HttpGet("get-by/{id}")]
+    public async Task<IActionResult> GetById([FromRoute] int id)
+    {
+        try
+        {
+            var answer = await service.GetById(id);
+            return Ok(answer);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }

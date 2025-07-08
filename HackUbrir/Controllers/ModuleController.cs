@@ -9,12 +9,26 @@ namespace HackUbrir.Controllers;
 public class ModuleController(IModuleService service) : ControllerBase
 {
     [HttpPost("create")]
-    public async Task<IActionResult> Create([FromBody] ModuleDto dto)
+    public async Task<IActionResult> Create([FromBody] ModuleDtoRequest request)
     {
         try
         {
-            var id = await service.Create(dto);
+            var id = await service.Create(request);
             return Ok(id);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpGet("get-by/{id}")]
+    public async Task<IActionResult> GetById([FromRoute] int id)
+    {
+        try
+        {
+            var module = await service.GetById(id);
+            return Ok(module);
         }
         catch (Exception e)
         {

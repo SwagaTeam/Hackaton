@@ -9,4 +9,6 @@ public interface ILevelRepository
 
     public Task<LevelEntity> GetById(int id);
     public Task<LevelEntity> GetByNumber(int number);
+    public Task SaveNextLevelId(int id, int nextLevelId);
+
 }

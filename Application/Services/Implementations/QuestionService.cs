@@ -6,9 +6,16 @@ namespace Application.Services.Implementations;
 
 public class QuestionService(IQuestionRepository repository) : IQuestionService
 {
-    public async Task<int> Create(QuestionDto dto)
+    public async Task<int> Create(QuestionRequest request)
     {
-        var id = await repository.CreateAsync(dto.Title, dto.LevelId);
+        var id = await repository.CreateAsync(request.Title, request.LevelId);
         return id;
+    }
+
+    public async Task<QuestionResponse> GetById(int id)
+    {
+        var entity = await repository.GetById(id);
+        var dto = new QuestionResponse(entity);
+        return dto;
     }
 }

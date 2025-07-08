@@ -9,12 +9,26 @@ namespace HackUbrir.Controllers;
 public class LevelController(ILevelService service) : ControllerBase
 {
     [HttpPost("create")]
-    public async Task<IActionResult> Create([FromBody] LevelDto dto)
+    public async Task<IActionResult> Create([FromBody] LevelDtoRequest dtoRequest)
     {
         try
         {
-            var id = await service.Create(dto);
+            var id = await service.Create(dtoRequest);
             return Ok(id);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpGet("get-by/{id}")]
+    public async Task<IActionResult> GetById([FromRoute] int id)
+    {
+        try
+        {
+            var level = await service.GetById(id);
+            return Ok(level);
         }
         catch (Exception e)
         {

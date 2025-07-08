@@ -2,16 +2,11 @@
 
 namespace Application.Dto;
 
-public class ModuleDto
+public class ModuleDtoRequest
 {
     public string Title { get; set; }
 
-    public ModuleDto()
-    {
-        
-    }
-
-    public ModuleDto(ModuleEntity entity)
+    public ModuleDtoRequest(ModuleEntity entity)
     {
         Title = entity.Title;
     }

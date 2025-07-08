@@ -22,10 +22,20 @@ public class LevelRepository(AppDbContext context) : ILevelRepository
         return entity.Id;
     }
 
+    public async Task SaveNextLevelId(int id,  int nextLevelId)
+    {
+        var entity = await GetById(id);
+        entity.NextLevelId = nextLevelId;
+        context.Levels.Update(entity);
+        await context.SaveChangesAsync();
+    }
+
     public async Task<LevelEntity> GetById(int id)
     {
         var entity = context.Levels
             .Include(l=>l.Theory)
+            .Include(m => m.Module)
+            .Include(l=>l.Questions)
             .FirstOrDefault(l=>l.Id == id);
         return entity;
     }
@@ -34,6 +44,8 @@ public class LevelRepository(AppDbContext context) : ILevelRepository
     {
         var entity = context.Levels
             .Include(l => l.Theory)
+            .Include(m=>m.Module)
+            .Include(l=>l.Questions)
             .FirstOrDefault(l => l.LevelNumber == number);
         
         return entity;
