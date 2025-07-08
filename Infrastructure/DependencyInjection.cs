@@ -10,8 +10,6 @@ public static class DependencyInjection
     {
         services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connString));
 
-        //services.AddScoped<ITraineeRepository, TraineeRepository>();
-
         return services;
     }
 }

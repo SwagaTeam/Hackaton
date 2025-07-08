@@ -34,6 +34,9 @@
             "projectReferences": {
               "C:\\Users\\belik\\Source\\Repos\\Hackaton\\Domain\\Domain.csproj": {
                 "projectPath": "C:\\Users\\belik\\Source\\Repos\\Hackaton\\Domain\\Domain.csproj"
+              },
+              "C:\\Users\\belik\\Source\\Repos\\Hackaton\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\belik\\Source\\Repos\\Hackaton\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -61,6 +64,10 @@
               "version": "[9.0.6, )"
             },
             "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[8.12.1, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
               "version": "[8.12.1, )"
             }
