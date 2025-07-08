@@ -1,3 +1,4 @@
+using Application.Middleware;
 using Application.Services.Abstractions;
 using Application.Services.Implementations;
 using Domain;
@@ -15,8 +16,16 @@ internal class Program
         builder.Services.AddScoped<IApiService, ApiService>();
         builder.Services.AddScoped<IQuestionService, QuestionService>();
         builder.Services.AddScoped<IAnswerService, AnswerService>();
+        builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddScoped<IAuth, Auth>();
+        builder.Services.AddScoped<IEncrypt, Encrypt>();
+        builder.Services.AddScoped<ILevelService, LevelService>();
+        builder.Services.AddScoped<IModuleService, ModuleService>();
+        builder.Services.AddScoped<ITheoryService, TheoryService>();
+        builder.Services.AddScoped<IBlacklistService, BlacklistService>();
         builder.Services.AddSingleton<HttpClient>();
         builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("DefaultConnection"));
+
 
         var app = builder.Build();
 
@@ -29,7 +38,7 @@ internal class Program
         app.UseSwaggerUI();
 
         app.UseHttpsRedirection();
-
+        app.UseMiddleware<JwtBlacklistMiddleware>();
         app.MapControllers();
 
         await app.RunAsync();

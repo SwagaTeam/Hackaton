@@ -1,10 +1,11 @@
 ﻿using Domain;
 using Domain.Entities;
+using Infrastructure.Repository.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.Implementations;
 
-public class LevelRepository(AppDbContext context)
+public class LevelRepository(AppDbContext context) : ILevelRepository
 {
     public async Task<int> Create(int levelNumber, string name, int difficulty, int? nextLevelId, int theoryId,
         int moduleId)

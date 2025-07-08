@@ -14,6 +14,7 @@ public class AppDbContext : DbContext
     public DbSet<TheoryEntity> Theories { get; set; }
     public DbSet<QuestionEntity> Questions { get; set; }
     public DbSet<AnswerEntity> Answers { get; set; }
+    public DbSet<ModuleEntity> Modules { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

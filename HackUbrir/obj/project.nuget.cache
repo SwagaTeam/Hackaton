@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "246LX5LaG08=",
+  "dgSpecHash": "Y356J6jxo/A=",
   "success": true,
-  "projectFilePath": "C:\\Users\\dan4i\\RiderProjects\\Hackaton\\HackUbrir\\HackUbrir.csproj",
+  "projectFilePath": "E:\\RiderProjects\\Hackaton\\HackUbrir\\HackUbrir.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dan4i\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\dan4i\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\9.0.6\\microsoft.aspnetcore.cryptography.internal.9.0.6.nupkg.sha512",
