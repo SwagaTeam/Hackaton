@@ -53,6 +53,16 @@ internal class Program
 
         builder.Services.AddHostedService<DataSchedulerService>();
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", policy =>
+            {
+                policy.AllowAnyOrigin()
+                      .AllowAnyMethod()
+                      .AllowAnyHeader();
+            });
+        });
+
         var app = builder.Build();
         app.UseMiddleware<JwtBlacklistMiddleware>();
 
@@ -67,6 +77,8 @@ internal class Program
         app.UseAuthorization();
         app.UseHttpsRedirection();
         app.MapControllers();
+
+        app.UseCors("AllowAll");
 
         await app.RunAsync();
     }

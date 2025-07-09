@@ -53,6 +53,12 @@ namespace Application.Services.Implementations
             return await userRepository.GetUsers();
         }
 
+        public async Task<int> Update(UserEntity user)
+        {
+            return await userRepository.Update(user);
+        }
+
+
         public async Task<UserModel?> ValidateCredentials(string login, string password)
         {
             var userEntity = await userRepository.GetUserByLogin(login);

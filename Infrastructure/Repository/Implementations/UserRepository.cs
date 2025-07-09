@@ -25,6 +25,13 @@ namespace Infrastructure.Repository.Implementations
             return user.Id;
         }
 
+        public async Task<int> Update(UserEntity user)
+        {
+            context.Users.Update(user);
+            await context.SaveChangesAsync();
+            return user.Id;
+        }
+
         public async Task<UserEntity> GetUser(int userId)
         {
             return await context.Users.FindAsync(userId);
