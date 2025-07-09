@@ -4,6 +4,7 @@ namespace Application.Dto;
 
 public class ModuleDtoResponse
 {
+    public int Id { get; private set; }
     public string Title { get; set; }
     public List<LevelDtoRequest>? Levels { get; set; }
 
@@ -11,6 +12,7 @@ public class ModuleDtoResponse
 
     public ModuleDtoResponse(ModuleEntity entity)
     {
+        Id = entity.Id;
         Title = entity.Title;
         Levels = entity.Levels is null
             ? new List<LevelDtoRequest>()
