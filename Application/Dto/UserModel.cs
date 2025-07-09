@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Entities;
 
 namespace Application.Dto
 {
@@ -15,5 +16,16 @@ namespace Application.Dto
         public string Salt { get; set; }
         public bool IsAdmin { get; set; }
         public int CurrentLevelNumber { get; set; }
+
+        public UserModel(UserEntity entity)
+        {
+            FullName = entity.FullName;
+            IsAdmin = entity.IsAdmin;
+            Id = entity.Id;
+            Login = entity.Login;
+            Password = entity.Password;
+            Salt = entity.Salt;
+            CurrentLevelNumber = entity.CurrentLevelNumber;
+        }
     }
 }

@@ -26,7 +26,6 @@ internal class Program
         string connString = builder.Configuration.GetConnectionString("DefaultConnection");
         builder.Services.AddInfrastructure(connString);
         builder.Services.AddHttpContextAccessor();
-
         builder.Services.AddScoped<IApiService, ApiService>();
         builder.Services.AddScoped<IQuestionService, QuestionService>();
         builder.Services.AddScoped<IAnswerService, AnswerService>();
@@ -37,7 +36,6 @@ internal class Program
         builder.Services.AddScoped<ILevelService, LevelService>();
         builder.Services.AddScoped<IModuleService, ModuleService>();
         builder.Services.AddScoped<ITheoryService, TheoryService>();
-
         builder.Services.AddSingleton<IBlacklistService, BlacklistService>();
         builder.Services.AddSingleton<HttpClient>();
 
@@ -103,7 +101,7 @@ internal class Program
 
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
-                Description = "Введите 'Bearer' [пробел] для авторизации",
+                Description = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 'Bearer' [пїЅпїЅпїЅпїЅпїЅпїЅ] пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
                 Name = "Authorization",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey
