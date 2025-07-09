@@ -10,4 +10,9 @@ public class ModuleDtoRequest
     {
         Title = entity.Title;
     }
+
+    public ModuleDtoRequest()
+    {
+        
+    }
 }

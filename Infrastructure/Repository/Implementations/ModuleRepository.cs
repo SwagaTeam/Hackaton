@@ -27,6 +27,6 @@ public class ModuleRepository(AppDbContext context) : IModuleRepository
 
     public async Task<IEnumerable<ModuleEntity>> GetAll()
     {
-        return context.Modules;
+        return context.Modules.Include(x=>x.Levels);
     }
 }

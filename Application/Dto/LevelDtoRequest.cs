@@ -22,4 +22,9 @@ public class LevelDtoRequest
         TheoryId = entity.TheoryId;
         ModuleId = entity.ModuleId;
     }
+
+    public LevelDtoRequest()
+    {
+        
+    }
 }
