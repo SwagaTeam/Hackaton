@@ -53,10 +53,11 @@ namespace Application.Services.Implementations
                 userRoles.Add(UserRoles.USER);
 
             var claims = new List<Claim>
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString() ?? "-1"),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
+                {
+                    new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString() ?? "-1"),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString() ?? "-1"), // <-- добавляем это!
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                };
 
             claims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
 

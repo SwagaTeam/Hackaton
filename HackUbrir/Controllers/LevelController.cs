@@ -47,18 +47,11 @@ public class LevelController(ILevelService service, IAuth auth, IUserService use
             if(percent >= 0.8)
             {
                 var id = auth.GetCurrentUserId();
-                var userModel = await userService.GetUser((int)id);
+                var entity = await userService.GetUser((int)id);
 
-                var userEntity = new UserEntity() {
-                  Id=userModel.Id,
-                  IsAdmin = userModel.IsAdmin,
-                  FullName = userModel.FullName,
-                  Login = userModel.Login,
-                  Password = userModel.Password,
-                  Salt = userModel.Salt,
-                  CurrentLevelNumber = userModel.CurrentLevelNumber++ 
-                };
-                await userService.Update(userEntity);
+                entity.CurrentLevelNumber++;
+                
+                await userService.Update(entity);
 
                 return Ok(true);
             }

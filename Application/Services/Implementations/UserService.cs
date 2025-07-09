@@ -42,11 +42,10 @@ namespace Application.Services.Implementations
             return await userRepository.Create(user);
         }
 
-        public async Task<UserModel> GetUser(int userId)
+        public async Task<UserEntity> GetUser(int userId)
         {
             var userEntity = await userRepository.GetUser(userId);
-            var userModel = new UserModel(userEntity);
-            return userModel;
+            return userEntity;
         }
 
         public async Task<List<UserEntity>> GetUsers()

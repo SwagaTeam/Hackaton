@@ -11,7 +11,7 @@ namespace Application.Services.Abstractions
     public interface IUserService
     {
         public Task<int> Create(RegisterModel model);
-        public Task<UserModel> GetUser(int userId);
+        public Task<UserEntity> GetUser(int userId);
         public Task<List<UserEntity>> GetUsers();
         public Task<int> Update(UserEntity user);
         Task<UserModel> ValidateCredentials(string login, string password);
