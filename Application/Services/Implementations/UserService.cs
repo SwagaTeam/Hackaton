@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Validation;
+using FluentValidation;
 
 namespace Application.Services.Implementations
 {
@@ -18,7 +20,14 @@ namespace Application.Services.Implementations
         {
             if (model.Password != model.RepeatPassword)
                 throw new Exception("Пароли не совпадают");
-
+            var validator = new UserValidator();
+            var result = await validator.ValidateAsync(model);
+            if (!result.IsValid)
+            {
+                throw new ArgumentException(
+                    string.Join("; ", result.Errors.Select(e => e.ErrorMessage))
+                );
+            }
             var salt = Guid.NewGuid().ToString();
             var user = new UserEntity()
             {
@@ -36,15 +45,7 @@ namespace Application.Services.Implementations
         public async Task<UserModel> GetUser(int userId)
         {
             var userEntity = await userRepository.GetUser(userId);
-            var userModel = new UserModel()
-            {
-                IsAdmin = userEntity.IsAdmin,
-                CurrentLevelNumber = userEntity.CurrentLevelNumber,
-                Login = userEntity.Login,
-                Password = userEntity.Password,
-                FullName = userEntity.FullName,
-                Salt = userEntity.Salt
-            };
+            var userModel = new UserModel(userEntity);
             return userModel;
         }
 
@@ -64,15 +65,7 @@ namespace Application.Services.Implementations
             var userEntity = await userRepository.GetUserByLogin(login);
             if (userEntity is null)
                 return null;
-            return new UserModel()
-            {
-                IsAdmin = userEntity.IsAdmin,
-                CurrentLevelNumber = userEntity.CurrentLevelNumber,
-                Login = userEntity.Login,
-                Password = userEntity.Password,
-                FullName = userEntity.FullName,
-                Salt = userEntity.Salt
-            };
+            return new UserModel(userEntity);
         }
     }
 }

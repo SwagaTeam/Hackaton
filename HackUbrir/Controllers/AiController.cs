@@ -1,4 +1,5 @@
-﻿using Application.Services.Abstractions;
+﻿using Application.Dto;
+using Application.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HackUbrir.Controllers;
@@ -7,12 +8,12 @@ namespace HackUbrir.Controllers;
 [Route("[controller]")]
 public class AiController(IApiService apiService) : ControllerBase
 {
-    [HttpGet("[action]")]
-    public async Task<ActionResult<string>> GetShortDescription(string content)
+    [HttpPost("[action]")]
+    public async Task<ActionResult<string>> GetShortDescription([FromBody] ShortDescriptionRequest request)
     {
         try
         {
-            var result = await apiService.GetSummaryAsync(content);
+            var result = await apiService.GetSummaryAsync(request.Content);
             return Ok(result);
         }
         catch (Exception ex)
@@ -21,12 +22,12 @@ public class AiController(IApiService apiService) : ControllerBase
         }
     }
 
-    [HttpGet("[action]")]
-    public async Task<IActionResult> GetAnswerQuestions(string question, string content)
+    [HttpPost("[action]")]
+    public async Task<IActionResult> GetAnswerQuestions([FromBody] AiQueryRequest request)
     {
         try
         {
-            var result = await apiService.AskQuestionAsync(question, content);
+            var result = await apiService.AskQuestionAsync(request.Question, request.Text);
             return Ok(result);
         }
         catch (Exception ex)
