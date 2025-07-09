@@ -35,4 +35,17 @@ public class ModuleController(IModuleService service) : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+    [HttpGet("get-all")]
+    public async Task<IActionResult> GetAll()
+    {
+        try
+        {
+            return Ok(await service.GetAll());
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }

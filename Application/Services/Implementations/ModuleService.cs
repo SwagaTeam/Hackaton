@@ -18,4 +18,10 @@ public class ModuleService(IModuleRepository repository) : IModuleService
         var dto = new ModuleDtoResponse(module);
         return dto;
     }
+
+    public async Task<IEnumerable<ModuleDtoResponse>> GetAll()
+    {
+        var modules = await repository.GetAll();
+        return modules.Select(m=>new ModuleDtoResponse(m));
+    }
 }
