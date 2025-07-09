@@ -8,7 +8,7 @@ public class ModuleService(IModuleRepository repository) : IModuleService
 {
     public async Task<int> Create(ModuleDtoRequest dtoResponse)
     {
-        var id = await repository.Create(dtoResponse.Title);
+        var id = await repository.Create(dtoResponse.Title, dtoResponse.Text);
         return id;
     }
 

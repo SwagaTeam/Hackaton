@@ -39,6 +39,22 @@ namespace HackUbrir.Controllers
             }
         }
 
+        [HttpGet("get-user")]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            try
+            {
+                var currentUserId = auth.GetCurrentUserId();
+                if (currentUserId == null || currentUserId == -1) return Unauthorized();
+                var user = await userService.GetUser((int)currentUserId);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> RegisterSubscriber([FromBody] RegisterModel model)
         {

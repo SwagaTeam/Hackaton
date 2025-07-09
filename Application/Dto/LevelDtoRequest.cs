@@ -8,7 +8,7 @@ public class LevelDtoRequest
     public int LevelNumber { get; set; }
     public string Name { get; set; }
     public int Difficulty { get; set; }
-    public int? NextLevelId { get; set; }
+    public int? NextLevelId { get; private set; }
     public int TheoryId { get; set; }
     public int ModuleId { get; set; }
 

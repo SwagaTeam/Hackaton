@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using System.Text;
 using Application.Middleware;
 using Application.Quartz;
 using Application.Quartz.Workers;
@@ -8,24 +10,25 @@ using Domain;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Security.Claims;
-using System.Text;
 
 internal class Program
 {
     private static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
         AddAuthentication(builder.Services, builder.Configuration);
         AddSwagger(builder.Services);
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
+
         string connString = builder.Configuration.GetConnectionString("DefaultConnection");
         builder.Services.AddInfrastructure(connString);
+
         builder.Services.AddHttpContextAccessor();
+
         builder.Services.AddScoped<IApiService, ApiService>();
         builder.Services.AddScoped<IQuestionService, QuestionService>();
         builder.Services.AddScoped<IAnswerService, AnswerService>();
@@ -62,21 +65,27 @@ internal class Program
         });
 
         var app = builder.Build();
+
+        // Важно: сначала CORS!
+        app.UseCors("AllowAll");
+
+        // Аутентификация и авторизация идут до твоего middleware
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        // JwtBlacklistMiddleware после аутентификации
         app.UseMiddleware<JwtBlacklistMiddleware>();
+
+        app.UseHttpsRedirection();
+
+        app.MapControllers();
+
+        app.UseSwagger();
+        app.UseSwaggerUI();
 
         using var scope = app.Services.CreateScope();
         using var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         await Migrate(appDbContext);
-
-        // Configure the HTTP request pipeline.
-        app.UseSwagger();
-        app.UseSwaggerUI();
-        app.UseAuthentication();
-        app.UseAuthorization();
-        app.UseHttpsRedirection();
-        app.MapControllers();
-
-        app.UseCors("AllowAll");
 
         await app.RunAsync();
     }
@@ -113,7 +122,7 @@ internal class Program
 
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
-                Description = "������� 'Bearer' [������] ��� �����������",
+                Description = "Введите 'Bearer' и ваш JWT токен",
                 Name = "Authorization",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey

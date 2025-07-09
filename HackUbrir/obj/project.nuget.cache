@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MucdrMQQsV4=",
+  "dgSpecHash": "SVKm6aTOWwg=",
   "success": true,
-  "projectFilePath": "C:\\Users\\dan4i\\RiderProjects\\Hackaton\\HackUbrir\\HackUbrir.csproj",
+  "projectFilePath": "E:\\RiderProjects\\z\\HackUbrir\\HackUbrir.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dan4i\\.nuget\\packages\\bouncycastle.cryptography\\2.5.1\\bouncycastle.cryptography.2.5.1.nupkg.sha512",
     "C:\\Users\\dan4i\\.nuget\\packages\\fluentvalidation\\12.0.0\\fluentvalidation.12.0.0.nupkg.sha512",

@@ -4317,11 +4317,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\dan4i\\RiderProjects\\Hackaton\\HackUbrir\\HackUbrir.csproj",
+      "projectUniqueName": "E:\\RiderProjects\\z\\HackUbrir\\HackUbrir.csproj",
       "projectName": "HackUbrir",
-      "projectPath": "C:\\Users\\dan4i\\RiderProjects\\Hackaton\\HackUbrir\\HackUbrir.csproj",
+      "projectPath": "E:\\RiderProjects\\z\\HackUbrir\\HackUbrir.csproj",
       "packagesPath": "C:\\Users\\dan4i\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\dan4i\\RiderProjects\\Hackaton\\HackUbrir\\obj\\",
+      "outputPath": "E:\\RiderProjects\\z\\HackUbrir\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\dan4i\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -4336,11 +4336,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\dan4i\\RiderProjects\\Hackaton\\Application\\Application.csproj": {
-              "projectPath": "C:\\Users\\dan4i\\RiderProjects\\Hackaton\\Application\\Application.csproj"
+            "E:\\RiderProjects\\z\\Application\\Application.csproj": {
+              "projectPath": "E:\\RiderProjects\\z\\Application\\Application.csproj"
             },
-            "C:\\Users\\dan4i\\RiderProjects\\Hackaton\\Infrastructure\\Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\dan4i\\RiderProjects\\Hackaton\\Infrastructure\\Infrastructure.csproj"
+            "E:\\RiderProjects\\z\\Infrastructure\\Infrastructure.csproj": {
+              "projectPath": "E:\\RiderProjects\\z\\Infrastructure\\Infrastructure.csproj"
             }
           }
         }
@@ -4354,7 +4354,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -4406,7 +4407,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

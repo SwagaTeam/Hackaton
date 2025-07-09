@@ -7,10 +7,11 @@ namespace Infrastructure.Repository.Implementations;
 
 public class ModuleRepository(AppDbContext context) : IModuleRepository
 {
-    public async Task<int> Create(string title)
+    public async Task<int> Create(string title, string text)
     {
         var entity = new ModuleEntity();
         entity.Title = title;
+        entity.Text = text;
         context.Modules.Add(entity);
         await context.SaveChangesAsync();
         return entity.Id;

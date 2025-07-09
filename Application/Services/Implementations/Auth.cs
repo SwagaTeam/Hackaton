@@ -35,8 +35,7 @@ namespace Application.Services.Implementations
             int id = int.Parse(claimsIdentity?.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "-1");
             return id;
         }
-
-
+        
         public List<string> GetCurrentUserRoles()
         {
             var claimsIdentity = httpContextAccessor.HttpContext?.User.Identity as ClaimsIdentity;
