@@ -38,7 +38,7 @@ public class LevelController(ILevelService service, IAuth auth, IUserService use
     }
 
     [HttpGet("is-level-completed")]
-    public async Task<IActionResult> IsLvlCompleted([FromQuery] int rightAnswers, int questionsCount)
+    public async Task<IActionResult> IsLvlCompleted([FromQuery] int rightAnswers, int questionsCount, int lvlNumber)
     {
         try
         {
@@ -49,6 +49,8 @@ public class LevelController(ILevelService service, IAuth auth, IUserService use
                 var id = auth.GetCurrentUserId();
                 var entity = await userService.GetUser((int)id);
 
+                if (entity.CurrentLevelNumber >= lvlNumber)
+                    return Ok();
                 entity.CurrentLevelNumber++;
                 
                 await userService.Update(entity);
