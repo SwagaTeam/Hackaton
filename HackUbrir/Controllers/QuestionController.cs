@@ -36,15 +36,12 @@ public class QuestionController(IQuestionService questionService, IAuth auth, IU
         }
     }
 
-    [HttpGet("get-cards")]
-    public async Task<IActionResult> GetCards()
+    [HttpGet("get-cards/{levelNumber}")]
+    public async Task<IActionResult> GetCards([FromRoute] int levelNumber)
     {
         try
         {
-            var currentUserId = auth.GetCurrentUserId();
-            if (currentUserId is null or -1) return Unauthorized();
-            var user = await userService.GetUser((int)currentUserId);
-            var questions = await questionService.GetRandomQuestionsBelowLevel(user.CurrentLevelNumber);
+            var questions = await questionService.GetRandomQuestionsBelowLevel(levelNumber);
             return Ok(questions);
         }
         catch (Exception e)
